@@ -25,8 +25,7 @@ var AppCouchDBClient = new Class({
   ON_CONNECT: 'onConnect',
   ON_CONNECT_ERROR: 'onConnectError',
 
-  //request: null,
-	conn: null,
+  request: null,
 
   api: {},
 
@@ -246,11 +245,9 @@ var AppCouchDBClient = new Class({
 			url: this.options.scheme + '://'+ this.options.host + ':' + this.options.port
 		};
 
-		this.conn = require('nano')(Object.merge(opts, this.options.couchdb));
+		this.request = require('nano')(Object.merge(opts, this.options.couchdb));
 		if(this.options.db)
-			this.conn = this.conn.use(this.options.db);
-
-		console.log(this.conn);
+			this.request = this.request.use(this.options.db);
 
 		/**
 		 * cradle
@@ -519,7 +516,7 @@ var AppCouchDBClient = new Class({
 							//console.log(verb);
 
 
-							let response = function(err, resp){
+							let response = function(err, resp, body){
 								////console.log('---req_func.cache.has(options.doc)---')
 								////console.log(resp._id);
 								////console.log(this.request.database('dashboard').cache.has(resp._id));
@@ -598,35 +595,34 @@ var AppCouchDBClient = new Class({
 
 							}.bind(this);
 
-							var args = options.args || [];
+							var args = [];
 
-							// if(options.id)
-							// 	args.push(options.id);
-              //
-							// if(options.rev)
-							// 	args.push(options.rev);
-              //
-							// if(options.data)
-							// 	args.push(options.data);
+							if(options.id)
+								args.push(options.id);
+
+							if(options.rev)
+								args.push(options.rev);
+
+							if(options.data)
+								args.push(options.data);
 
 
 							var req_func = null;
 							var db = keys[0];
-							// var cache = keys[1];
-							// var cache_result;
-
+							var cache = keys[1];
+							var cache_result;
 
 							if(db){
 								var name = re.exec(options.uri)[1];
 								// req_func = this.request['database'](name);
-								req_func = this.conn.use(name);
+								req_func = this.request.use(name);
 								//console.log('---DB----');
 								//console.log(name);
 								////console.log(req_func['info'](response));
 							}
 							else{
 								////console.log(this.request);
-								req_func = this.conn;
+								req_func = this.request;
 
 							}
 
@@ -658,10 +654,6 @@ var AppCouchDBClient = new Class({
 								if(args.length == 1)
 									args = args[0];
 
-
-								console.log('verb', verb)
-								// console.log(this.conn.info())
-
 								req_func[verb].attempt(args, req_func);
 
 
@@ -683,7 +675,7 @@ var AppCouchDBClient = new Class({
 
 				////console.log('returning...', request);
 
-				//return req_func;
+				//return request;
 
 			}.bind(this, verb, this[verb]);//copy the original function if there are func like this.get, this.post, etc
 
