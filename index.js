@@ -672,11 +672,13 @@ var AppCouchDBClient = new Class({
 
 					}.bind(this));
 
-					if(!uri_matched)
+					if(!uri_matched){
+						debug_internals('No routes matched for URI: %s', uri+path+options.uri);
 						throw new Error('No routes matched for URI: '+uri+path+options.uri);
+					}
 				}
 				else{
-					////console.log(routes);
+					debug_internals('No routes defined for method:  %s', verb.toUpperCase());
 					throw new Error('No routes defined for method: '+verb.toUpperCase());
 
 				}
@@ -714,6 +716,7 @@ var AppCouchDBClient = new Class({
 			options.couchdb = options.couchdb || this.options.couchdb;
 			options.host = options.host || this.options.host;
 			options.port = options.port || this.options.port;
+			options.db = options.db || this.options.db;
 
 			/**
 			 * subapps will re-use main app logger
