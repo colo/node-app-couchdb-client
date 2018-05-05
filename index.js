@@ -247,8 +247,8 @@ var AppCouchDBClient = new Class({
 		};
 
 		this.conn = require('nano')(Object.merge(opts, this.options.couchdb));
-		if(this.options.db)
-			this.conn = this.conn.use(this.options.db);
+		//if(this.options.db)
+			//this.conn = this.conn.use(this.options.db);
 
 		//console.log(this.conn);
 
