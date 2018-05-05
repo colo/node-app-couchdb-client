@@ -214,8 +214,8 @@ var AppCouchDBClient = new Class({
 		 *  - start
 		 * **/
 		//if(this.options.cradle){
-		////console.log('---this.options.cradle----');
-		////console.log(this.options.cradle);
+		//////console.log('---this.options.cradle----');
+		//////console.log(this.options.cradle);
 
 
 			//if(typeof(this.options.cradle) == 'class'){
@@ -250,7 +250,7 @@ var AppCouchDBClient = new Class({
 		if(this.options.db)
 			this.conn = this.conn.use(this.options.db);
 
-		console.log(this.conn);
+		//console.log(this.conn);
 
 		/**
 		 * cradle
@@ -358,16 +358,16 @@ var AppCouchDBClient = new Class({
 
 		Array.each(this.methods, function(verb){
 
-			//console.log('---VERB---');
-			//console.log(verb);
+			////console.log('---VERB---');
+			////console.log(verb);
 			/**
 			 * @callback_alt if typeof function, gets executed instead of the method asigned to the matched route (is an alternative callback, instead of the default usage)
 			 * */
 			instance[verb] = function(verb, original_func, options, callback_alt){
 				//debug_internals('instance[verb] %o', arguments);
 
-				//console.log('---gets called??---')
-				//console.log(arguments);
+				////console.log('---gets called??---')
+				////console.log(arguments);
 
 				//var request;//the request object to return
 
@@ -408,8 +408,8 @@ var AppCouchDBClient = new Class({
 
 				//var gzip = this.options.gzip || false;
 
-				//console.log('---ROUTES---');
-				//console.log(routes);
+				////console.log('---ROUTES---');
+				////console.log(routes);
 
 				debug_internals('routes %o', routes);
 				debug_internals('verb %s', verb);
@@ -421,8 +421,8 @@ var AppCouchDBClient = new Class({
 					Array.each(routes[verb], function(route){
 						debug_internals('instance[verb] route.path %s', route.path);
 
-						//console.log('---ROUTE PATH---');
-						////console.log(route.path);
+						////console.log('---ROUTE PATH---');
+						//////console.log(route.path);
 
 						//content_type = (typeof(route.content_type) !== "undefined") ? route.content_type : content_type;
 						//gzip = route.gzip || false;
@@ -433,12 +433,12 @@ var AppCouchDBClient = new Class({
 						var keys = []
 						var re = pathToRegexp(route.path, keys);
 
-						//console.log('route path: '+route.path);
-						//console.log(re.exec(options.uri));
-						//console.log('options.uri: '+options.uri);
-						//console.log(path);
-						//console.log(keys);
-						//console.log('--------');
+						////console.log('route path: '+route.path);
+						////console.log(re.exec(options.uri));
+						////console.log('options.uri: '+options.uri);
+						////console.log(path);
+						////console.log(keys);
+						////console.log('--------');
 
 
 
@@ -452,7 +452,7 @@ var AppCouchDBClient = new Class({
 							 * */
 							if(route.callbacks && route.callbacks.length > 0){
 								route.callbacks.each(function(fn){
-									////console.log('route function: ' + fn);
+									//////console.log('route function: ' + fn);
 
 									//if the callback function, has the same name as the verb, we had it already copied as "original_func"
 									if(fn == verb){
@@ -487,10 +487,10 @@ var AppCouchDBClient = new Class({
 
 
 
-							//////console.log(path+options.uri);
-							//////console.log('PATH');
-							//////console.log(options.uri);
-							//////console.log(options.uri);
+							////////console.log(path+options.uri);
+							////////console.log('PATH');
+							////////console.log(options.uri);
+							////////console.log(options.uri);
 
 							var merged = {};
 							//Object.merge(
@@ -509,29 +509,29 @@ var AppCouchDBClient = new Class({
 								//}
 							//);
 
-							//console.log('---MERGED----');
-							//console.log(merged);
-							//////console.log(process.env.PROFILING_ENV);
-							//////console.log(this.logger);
+							////console.log('---MERGED----');
+							////console.log(merged);
+							////////console.log(process.env.PROFILING_ENV);
+							////////console.log(this.logger);
 
-							//console.log('---VERB----')
-							////console.log(this.options.db);
-							//console.log(verb);
+							////console.log('---VERB----')
+							//////console.log(this.options.db);
+							////console.log(verb);
 
 
 							let response = function(err, resp){
-								////console.log('---req_func.cache.has(options.doc)---')
-								////console.log(resp._id);
-								////console.log(this.request.database('dashboard').cache.has(resp._id));
+								//////console.log('---req_func.cache.has(options.doc)---')
+								//////console.log(resp._id);
+								//////console.log(this.request.database('dashboard').cache.has(resp._id));
 
-								//console.log('--response callback---');
-								//console.log(arguments);
+								////console.log('--response callback---');
+								////console.log(arguments);
 								if(resp){
 									let cast_resp = null;
 									if(resp[0]){
 										cast_resp = [];
 
-										//console.log(typeof(cast_resp));
+										////console.log(typeof(cast_resp));
 
 										Array.each(resp, function(value, index){
 											cast_resp.push(value);
@@ -539,8 +539,8 @@ var AppCouchDBClient = new Class({
 
 										resp = cast_resp;
 
-										//console.log(resp);
-										//console.log(Array.isArray(cast_resp));
+										////console.log(resp);
+										////console.log(Array.isArray(cast_resp));
 										//throw new Error('Array');
 									}
 									else{
@@ -551,7 +551,7 @@ var AppCouchDBClient = new Class({
 
 										resp = cast_resp;
 
-										//console.log(resp);
+										////console.log(resp);
 										//throw new Error('Object');
 									}
 								}
@@ -620,29 +620,29 @@ var AppCouchDBClient = new Class({
 								var name = re.exec(options.uri)[1];
 								// req_func = this.request['database'](name);
 								req_func = this.conn.use(name);
-								//console.log('---DB----');
-								//console.log(name);
-								////console.log(req_func['info'](response));
+								////console.log('---DB----');
+								////console.log(name);
+								//////console.log(req_func['info'](response));
 							}
 							else{
-								////console.log(this.request);
+								//////console.log(this.request);
 								req_func = this.conn;
 
 							}
 
 							// if(cache){
-							// 	//console.log('---CACHE----');
-							// 	//console.log(options);
-							// 	//console.log(args);
+							// 	////console.log('---CACHE----');
+							// 	////console.log(options);
+							// 	////console.log(args);
 							// 	//req_func.get(options.doc, function(err, resp){
               //
-							// 		////console.log('--cache result---',cache_result);
+							// 		//////console.log('--cache result---',cache_result);
               //
 							// 	//});
 							// 	cache_result = req_func.cache[verb](args);
               //
-							// 	//console.log('---CACHE RESULT----');
-							// 	//console.log(cache_result);
+							// 	////console.log('---CACHE RESULT----');
+							// 	////console.log(cache_result);
               //
 							// 	if(cache_result || cache.optional == false)
 							// 		response(null, cache_result);
@@ -659,8 +659,8 @@ var AppCouchDBClient = new Class({
 									args = args[0];
 
 
-								console.log('verb', verb)
-								// console.log(this.conn.info())
+								//console.log('verb', verb)
+								// //console.log(this.conn.info())
 
 								req_func[verb].attempt(args, req_func);
 
@@ -683,7 +683,7 @@ var AppCouchDBClient = new Class({
 
 				}
 
-				////console.log('returning...', request);
+				//////console.log('returning...', request);
 
 				//return req_func;
 
@@ -693,8 +693,8 @@ var AppCouchDBClient = new Class({
 
 	},
 	use: function(mount, app){
-		//console.log('---AppCouchDBClient----');
-		//console.log(instanceOf(app, AppCouchDBClient));
+		////console.log('---AppCouchDBClient----');
+		////console.log(instanceOf(app, AppCouchDBClient));
 		debug('use instanceOf(app, AppCouchDBClient) %o', instanceOf(app, AppCouchDBClient));
 
 		if(instanceOf(app, AppCouchDBClient))
@@ -725,7 +725,7 @@ var AppCouchDBClient = new Class({
 			if(this.logger)
 				options.logs = this.logger;
 
-			////console.log(this.request);
+			//////console.log(this.request);
 
 			//if(this.request)
 				//options.cradle = this.request;
