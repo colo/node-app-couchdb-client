@@ -1,12 +1,18 @@
 'use strict'
+/**
+ * https://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser
+ **/
+var isNode=new Function("try {return this===global;}catch(e){return false;}");
 
-var App = require('node-app'),
-		path = require('path'),
+var App = require('node-app');
+
+if(isNode){
+	App = require('node-app/load')(App);
+}
+	
+var	path = require('path'),
 		fs = require('fs'),
-		// nano = require('nano'),
-		//request = require('request'),
 		pathToRegexp = require('path-to-regexp');
-		//semver = require('semver');
 
 
 ////var Logger = require('node-express-logger'),
@@ -707,55 +713,7 @@ var AppCouchDBClient = new Class({
 
 });
 
-/**
- * https://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser
- **/
-var isNode=new Function("try {return this===global;}catch(e){return false;}");
 
-
-if(isNode()){
-	AppCouchDBClient.implement({
-		load: function(wrk_dir, options){
-			options = options || {};
-
-			var get_options = function(options){
-				options.scheme = options.scheme || this.options.scheme;
-				options.url = options.url || this.options.url;
-				options.port = options.port || this.options.port;
-				options.authentication = options.authentication || this.options.authentication;
-				options.jar = options.jar || this.options.jar;
-				options.gzip = options.gzip || this.options.gzip;
-
-				options.couchdb = options.couchdb || this.options.couchdb;
-				options.host = options.host || this.options.host;
-				options.port = options.port || this.options.port;
-				options.db = options.db || this.options.db;
-
-				/**
-				 * subapps will re-use main app logger
-				 * */
-
-				if(this.logger)
-					options.logs = this.logger;
-
-				//////console.log(this.request);
-
-				//if(this.request)
-					//options.cradle = this.request;
-				//options.cradle = null;
-
-				return options;
-
-			}.bind(this);
-
-			this.parent(wrk_dir, get_options(options));
-
-
-		}
-	})
-}
-	
-	
 
 
 module.exports = AppCouchDBClient
