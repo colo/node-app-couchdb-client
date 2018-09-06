@@ -712,48 +712,50 @@ var AppCouchDBClient = new Class({
  **/
 var isNode=new Function("try {return this===global;}catch(e){return false;}");
 
-module.exports = function(){
-	if(isNode()){
-		AppCouchDBClient.implement({
-			load: function(wrk_dir, options){
-				options = options || {};
 
-				var get_options = function(options){
-					options.scheme = options.scheme || this.options.scheme;
-					options.url = options.url || this.options.url;
-					options.port = options.port || this.options.port;
-					options.authentication = options.authentication || this.options.authentication;
-					options.jar = options.jar || this.options.jar;
-					options.gzip = options.gzip || this.options.gzip;
+if(isNode()){
+	AppCouchDBClient.implement({
+		load: function(wrk_dir, options){
+			options = options || {};
 
-					options.couchdb = options.couchdb || this.options.couchdb;
-					options.host = options.host || this.options.host;
-					options.port = options.port || this.options.port;
-					options.db = options.db || this.options.db;
+			var get_options = function(options){
+				options.scheme = options.scheme || this.options.scheme;
+				options.url = options.url || this.options.url;
+				options.port = options.port || this.options.port;
+				options.authentication = options.authentication || this.options.authentication;
+				options.jar = options.jar || this.options.jar;
+				options.gzip = options.gzip || this.options.gzip;
 
-					/**
-					 * subapps will re-use main app logger
-					 * */
+				options.couchdb = options.couchdb || this.options.couchdb;
+				options.host = options.host || this.options.host;
+				options.port = options.port || this.options.port;
+				options.db = options.db || this.options.db;
 
-					if(this.logger)
-						options.logs = this.logger;
+				/**
+				 * subapps will re-use main app logger
+				 * */
 
-					//////console.log(this.request);
+				if(this.logger)
+					options.logs = this.logger;
 
-					//if(this.request)
-						//options.cradle = this.request;
-					//options.cradle = null;
+				//////console.log(this.request);
 
-					return options;
+				//if(this.request)
+					//options.cradle = this.request;
+				//options.cradle = null;
 
-				}.bind(this);
+				return options;
 
-				this.parent(wrk_dir, get_options(options));
+			}.bind(this);
+
+			this.parent(wrk_dir, get_options(options));
 
 
-			}
-		})
-	}
-	
-	return AppCouchDBClient
+		}
+	})
 }
+	
+	
+
+
+module.exports = AppCouchDBClient
