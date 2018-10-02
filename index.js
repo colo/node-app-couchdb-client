@@ -244,9 +244,9 @@ var AppCouchDBClient = new Class({
 			url: this.options.scheme + '://'+ this.options.host + ':' + this.options.port
 		};
 
-		if(nano){
-			console.log('opt.nano', nano)
-			this.conn = nano(Object.merge(opts, this.options.couchdb))
+		if(this.options.nano){
+			console.log('opt.nano', this.options.nano)
+			this.conn = this.options.nano(Object.merge(opts, this.options.couchdb))
 		}
 		else{
 			this.conn = require('nano')(Object.merge(opts, this.options.couchdb));
