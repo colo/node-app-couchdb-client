@@ -103,8 +103,6 @@ var AppCouchDBClient = new Class({
 
 		},
 
-		nano: undefined,
-
 		logs: null,
 
 		authentication: null,
@@ -244,13 +242,9 @@ var AppCouchDBClient = new Class({
 			url: this.options.scheme + '://'+ this.options.host + ':' + this.options.port
 		};
 
-		if(this.options.nano){
-			console.log('opt.nano', this.options.nano)
-			this.conn = this.options.nano(Object.merge(opts, this.options.couchdb))
-		}
-		else{
-			this.conn = require('nano')(Object.merge(opts, this.options.couchdb));
-		}
+
+		this.conn = require('nano')(Object.merge(opts, this.options.couchdb));
+
 
 		//if(this.options.db)
 			//this.conn = this.conn.use(this.options.db);
